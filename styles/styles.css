@@ -1,0 +1,66 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+/* Game Container */
+.game-container{
+    width: 1000px;
+    height: 600px;
+    border: 5px red solid;
+    margin: 0 auto;
+}
+
+/* Game Starter */
+.game-starter{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Game Navigator */
+.game-navigator ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.game-navigator a{
+    text-decoration: none;
+    color: white;
+}
+
+.game-navigator li{
+    width: 300px;
+    height: 97px;
+    position: relative;
+    border: 2px blue solid;
+}
+
+.nav-container{
+    width: 300px;
+    height: 600px;
+}
+
+/* Button Navigation */
+button{
+    width: 300px;
+    height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Background-container */
+.bg-container{
+    width: 600px;
+    height: 600px;
+    position: relative;
+}
+
+.bg-container h1{
+    position: absolute;
+    right: 0;
+    left: 0;
+    text-align: center;
+    top: 50%;
+}
