@@ -40,6 +40,7 @@ body{
 .nav-container{
     width: 300px;
     height: 600px;
+    border: 1px solid red;
 }
 
 /* Button Navigation */
@@ -55,6 +56,10 @@ button{
     width: 600px;
     height: 600px;
     position: relative;
+    background-image: url("../images/pixel-art-bg.avif"); 
+    background-size: cover;
+    border: 1px solid red;
+    display: block;
 }
 
 .bg-container h1{
@@ -63,4 +68,22 @@ button{
     left: 0;
     text-align: center;
     top: 50%;
+}
+
+/* Mario */
+#mario{
+    position: absolute;
+    bottom: 8rem;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+}
+
+/* How to play */
+.htp-display{
+    display: none;
+    width: 600px;
+    height: 600px;
+    position: relative;
+    font-size: 1.8rem;
 }

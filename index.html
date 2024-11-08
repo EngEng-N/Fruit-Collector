@@ -22,16 +22,36 @@
                     </ul>
                 </nav> -->
                 <button>logo</button>
-                <button>How to play</button>
-                <button>Play</button>
-                <button>Easy</button>
-                <button>Medium</button>
-                <button>Hard</button>
+                <button id="btn-htp">How to play</button>
+                <button id="btn-play">Play</button>
+                <button id="btn-easy">Easy</button>
+                <button id="btn-medium">Medium</button>
+                <button id="btn-hard">Hard</button>
             </div>
             <div class="bg-container">
                 <h1>Coin Collector</h1>
+                <img src="images/MarioIdle (1).gif" alt="Mario standing image" id="mario">
+            </div>
+            <div class="htp-display">
+                <h1>How to play</h1>
+                <div class="control-container">
+                    <h2>Movement:</h2>
+                    <p>A = left, D = right, Space = kick</p>
+                    <h3>Rules</h3>
+                    <ol>
+                        <li>Collect the coins to win.</li>
+                        <li>Avoid touching the bombs and obstacles.</li>
+                        <li>The speed of the coins, bombs and obstacles will change depend on the difficulty.</li>
+                    </ol>
+                </div>
             </div>
         </section>
+        <section class="gameplay">
+            <canvas class="play-container">
+
+            </canvas>
+        </section>
     </div>
+    <script src="javascript/javascript.js"></script>
 </body>
 </html>
