@@ -25,6 +25,7 @@ let barrelY = 490; // draw the barrel at the same Y level as Mario
 
 // Game physcis
 let velocityX = -2; // Obstacles moving speed
+let speed;
 
 // Create the canvaso on load
 window.onload = function(){
@@ -57,7 +58,7 @@ function update(){
     context.clearRect(0,0, board.width, board.height); 
 
     // Re draw Mario image
-    
+    // Mario.x += speed;
     context.drawImage(marioIMG, Mario.x, Mario.y, Mario.width, Mario.height);
 
     for(let i = 0; i < barrelArray.length; i++){
@@ -82,12 +83,15 @@ function placeBarrel(){
 //  Mario character keys for movement
 function moveMario(e){
     if(e.code == "KeyA"){
-        velocityX = -5;
+        speed += -5;
     }
     else if(e.code == "KeyD"){
-        velocityX = 5;
+        speed = 5;
     }
     // else if(e.code == "Space"){
 
     // }
 }
+
+var leftKey;
+var rightKey;
