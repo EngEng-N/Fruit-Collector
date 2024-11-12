@@ -49,7 +49,8 @@ window.onload = function(){
     document.addEventListener("keydown", moveMario);
 
     player = new Player(200, 300);
-    gameloop = setInterval(step, 1500);
+    gameloop = setInterval(step, 250);
+    keyListeners();
 }
 
 // Re draw the canvas function
@@ -63,8 +64,6 @@ function update(){
     // Re draw Mario image
     // Mario.x += speed;
     context.drawImage(marioIMG, Mario.x, Mario.y, Mario.width, Mario.height);
-    context.fillStyle = "red";
-    context.fillRect(300,200, 50, 50);
 
     // Draw rectangle box character
     player.draw();
@@ -112,26 +111,65 @@ function step(){
     player.draw();
 }
 
-// function draw(){
-//     context.fillStyle = "green";
-//     context.fillRect(100, 200, 500, 300);
-//     player.draw();
-// } 
+class Player{
+    constructor(x,y) {
+        this.x = x;
+        this.y = y;
+        this.width = 50;
+        this.height = 50;
+        this.friction = 0.6 // to slow down the character
+        this.speed = 0;
+        this.maxSpeed = 10;
+        this.active = true; // check when player is moving or not
+    }
+    
+    move(){
+        if(this.active){
+            if(!leftKey && !rightKey){
+                this.speed *= this.friction;
+            }
+            else if(rightKey){
+                this.speed += 2;
+            }
+            else if(leftKey){
+                this.speed -= 2;
+            }
+        }
 
-function Player(x,y){
-    this.x = x;
-    this.y = y;
-    this.width = 50;
-    this.height = 100;
-    this.speed = speed;
+        // Check the max speed of the character
+        if(this.speed > this.maxSpeed){
+            this.speed = this.maxSpeed;
+        }
+        else if(this.speed < -this.maxSpeed){
+            this.speed = -this.maxSpeed;
+        }
 
-    this.move = function(){
-        this.x ++;
+        this.x += this.speed; // add the speed to X position of the character
     }
 
-    this.draw = function(){
+    draw(){
         context.fillStyle = "green";
         context.fillRect(this.x,  this.y, this.width, this.height);
     }
+}
+
+function keyListeners(){
+    document.addEventListener("keydown", function(e){
+        if(e.key === "a"){
+            leftKey = true;
+        }
+        else if(e.key === "d"){
+            rightKey = true;
+        }
+    })
+
+    document.addEventListener("keyup", function(e){
+        if(e.key === "a"){
+            leftKey = false;
+        }
+        else if(e.key === "d"){
+            rightKey = false;
+        }
+    })
 }
 
