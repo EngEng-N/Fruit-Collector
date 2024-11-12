@@ -47,6 +47,9 @@ window.onload = function(){
     requestAnimationFrame(update);
     // setInterval(placeBarrel, 1500); // Barrel will be placed every 1.5s
     document.addEventListener("keydown", moveMario);
+
+    player = new Player(200, 300);
+    gameloop = setInterval(step, 1500);
 }
 
 // Re draw the canvas function
@@ -60,6 +63,11 @@ function update(){
     // Re draw Mario image
     // Mario.x += speed;
     context.drawImage(marioIMG, Mario.x, Mario.y, Mario.width, Mario.height);
+    context.fillStyle = "red";
+    context.fillRect(300,200, 50, 50);
+
+    // Draw rectangle box character
+    player.draw();
 
     for(let i = 0; i < barrelArray.length; i++){
         let Barrel = barrelArray[i];
@@ -95,3 +103,35 @@ function moveMario(e){
 
 var leftKey;
 var rightKey;
+
+var gameloop;
+var player;
+
+function step(){
+    player.move();
+    player.draw();
+}
+
+// function draw(){
+//     context.fillStyle = "green";
+//     context.fillRect(100, 200, 500, 300);
+//     player.draw();
+// } 
+
+function Player(x,y){
+    this.x = x;
+    this.y = y;
+    this.width = 50;
+    this.height = 100;
+    this.speed = speed;
+
+    this.move = function(){
+        this.x ++;
+    }
+
+    this.draw = function(){
+        context.fillStyle = "green";
+        context.fillRect(this.x,  this.y, this.width, this.height);
+    }
+}
+
