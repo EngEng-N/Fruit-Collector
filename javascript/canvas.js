@@ -27,28 +27,32 @@ let barrelY = 490; // draw the barrel at the same Y level as Mario
 let velocityX = -2; // Obstacles moving speed
 let speed;
 
+// Key listeners
+var leftKey;
+var rightKey;
+
+let gameOver = false;
+var gameloop;
+var player;
+
 // Create the canvaso on load
 window.onload = function(){
     board.height = boardHeight;
     board.width = boardWidth;
     context = board.getContext("2d");
 
-    // Draw Mario character
+    // Mario character src image
     marioIMG = new Image();
     marioIMG.src = "../images/MarioIdle (1).gif"
-    marioIMG.onload = function(){
-        context.drawImage(marioIMG, Mario.x, Mario.y, Mario.width, Mario.height);
-    }
 
     // Barrel
     barrelIMG = new Image();
     barrelIMG.src = "../images/barrel.png";
     
     requestAnimationFrame(update);
-    // setInterval(placeBarrel, 1500); // Barrel will be placed every 1.5s
-    document.addEventListener("keydown", moveMario);
+    setInterval(placeBarrel, 3000); // Barrel will be placed every 1.5s
 
-    player = new Player(200, 300);
+    player = new Player(Mario.x, Mario.y);
     gameloop = setInterval(step, 250);
     keyListeners();
 }
@@ -61,21 +65,37 @@ function update(){
     // height is board.height or 700px
     context.clearRect(0,0, board.width, board.height); 
 
-    // Re draw Mario image
-    // Mario.x += speed;
-    context.drawImage(marioIMG, Mario.x, Mario.y, Mario.width, Mario.height);
+    if(gameOver){
+        context.fillStyle = "black";
+        context.font = "45px sans-serif";
+        context.fillText("Game Over", 400,350);
+        return;
+    }
 
-    // Draw rectangle box character
+    // Draw Mario character
     player.draw();
 
     for(let i = 0; i < barrelArray.length; i++){
         let Barrel = barrelArray[i];
         Barrel.x += velocityX; // Shifting position X of the barrel before drawing
         context.drawImage(Barrel.img, Barrel.x, Barrel.y, Barrel.width, Barrel.height);
+
+        if(collision(player, Barrel)){
+            gameOver = true;
+        }
+    }
+
+    while(barrelArray.length > 0 && barrelArray[0].x < -barrelWidth){
+        barrelArray.shift(); // remove the barrel that touches the left side of the screen
     }
 }
 
 function placeBarrel(){
+
+    if(gameOver){
+        return;
+    }
+
     let barrelOb = {
         img : barrelIMG,
         x : barrelX,
@@ -87,39 +107,21 @@ function placeBarrel(){
     barrelArray.push(barrelOb);
 }
 
-//  Mario character keys for movement
-function moveMario(e){
-    if(e.code == "KeyA"){
-        speed += -5;
-    }
-    else if(e.code == "KeyD"){
-        speed = 5;
-    }
-    // else if(e.code == "Space"){
-
-    // }
-}
-
-var leftKey;
-var rightKey;
-
-var gameloop;
-var player;
-
 function step(){
     player.move();
     player.draw();
 }
 
+// Mario character
 class Player{
     constructor(x,y) {
-        this.x = x;
-        this.y = y;
-        this.width = 50;
-        this.height = 50;
+        this.x = marioX;
+        this.y = marioY;
+        this.width = marioWidth; // Delete after testing collision
+        this.height = marioHeight; // Delete after testing collision
         this.friction = 0.6 // to slow down the character
         this.speed = 0;
-        this.maxSpeed = 10;
+        this.maxSpeed = 15;
         this.active = true; // check when player is moving or not
     }
     
@@ -150,7 +152,12 @@ class Player{
     draw(){
         context.fillStyle = "green";
         context.fillRect(this.x,  this.y, this.width, this.height);
+        context.drawImage(marioIMG, this.x,  this.y, this.width, this.height);
     }
+
+    // shoot(){
+
+    // }
 }
 
 function keyListeners(){
@@ -172,4 +179,12 @@ function keyListeners(){
         }
     })
 }
+
+function collision(a,b){
+	return a.x < b.x + b.width &&
+	       a.x + a.width > b.x &&
+	       a.y < b.y + b.height &&
+	       a.y + a.height > b.y
+}
+
 
