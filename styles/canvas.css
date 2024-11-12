@@ -1,0 +1,14 @@
+.game-container{
+    width: 1000px;
+    height: 700px;
+    border: 5px rgb(255, 0, 0) solid;
+    margin: 0 auto;
+}
+
+.container{
+    background-image: url("../images/pixel-art-bg.avif");
+    background-size: cover;
+    width: 1000px;
+    height: 700px;
+    margin: 0 auto;
+}
