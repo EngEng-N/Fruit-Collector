@@ -16,15 +16,22 @@ let Mario = {
     height : marioHeight
 }
 
-// Obstacles
+// Objects
 let barrelArray = [];
 let barrelWidth = 60;
 let barrelHeight = 41;
 let barrelX = boardWidth; // draw the barrel at the right side of the screen
 let barrelY = 490; // draw the barrel at the same Y level as Mario
 
+let coinArray = [];
+let coinX = 300;
+const coinY = 0;
+const coinW = 40;
+const coinH = 40;
+
 // Game physcis
 let velocityX = -2; // Obstacles moving speed
+let velocityY = 1.5;
 let speed;
 
 // Key listeners
@@ -48,9 +55,14 @@ window.onload = function(){
     // Barrel
     barrelIMG = new Image();
     barrelIMG.src = "../images/barrel.png";
+
+    // Coin
+    coinIMG = new Image();
+    coinIMG.src = "../images/coin.png";
     
     requestAnimationFrame(update);
-    setInterval(placeBarrel, 3000); // Barrel will be placed every 1.5s
+    //setInterval(placeBarrel, 3000); // Barrel will be placed every 1.5s
+    setInterval(placeCoin, 5500); // Coin will spawn every 5.5s
 
     player = new Player(Mario.x, Mario.y);
     gameloop = setInterval(step, 250);
@@ -77,7 +89,7 @@ function update(){
 
     for(let i = 0; i < barrelArray.length; i++){
         let Barrel = barrelArray[i];
-        Barrel.x += velocityX; // Shifting position X of the barrel before drawing
+        Barrel.x += velocityX; // Get the current image in the array and shift the position X of the barrel before drawing
         context.drawImage(Barrel.img, Barrel.x, Barrel.y, Barrel.width, Barrel.height);
 
         if(collision(player, Barrel)){
@@ -87,6 +99,17 @@ function update(){
 
     while(barrelArray.length > 0 && barrelArray[0].x < -barrelWidth){
         barrelArray.shift(); // remove the barrel that touches the left side of the screen
+    }
+
+    for(let i = 0; i < coinArray.length; i++){
+        let Coin = coinArray[i];
+        Coin.y += velocityY;
+        Coin.maxY = Coin.y;
+        context.drawImage(Coin.img, Coin.x, Coin.y, Coin.width, Coin.height);
+    }
+
+    while(coinArray.length > 0 && coinArray[0].maxY > 500){
+        coinArray.shift(); // remove coin when it touches the ground
     }
 }
 
@@ -106,6 +129,20 @@ function placeBarrel(){
     }
     barrelArray.push(barrelOb);
 }
+
+function placeCoin(){
+	let coinOb = {
+	    img: coinIMG,
+		x: coinX,
+		y: coinY,
+        maxY: 490,
+		width: coinW,
+		height: coinH,
+		collected: false
+	}
+	coinArray.push(coinOb)
+}
+
 
 function step(){
     player.move();
