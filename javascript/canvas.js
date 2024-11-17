@@ -66,15 +66,14 @@ window.onload = function(){
     coinIMG.src = "../images/coin.png";
 
     // Fireball 
-    // fireballIMG = new Image();
-    // fireballIMG.src = "../images/fireball.gif";
+    fireballIMG = new Image();
+    fireballIMG.src = "../images/fireball.gif";
     
     requestAnimationFrame(update);
     //setInterval(placeBarrel, 3000); // Barrel will be placed every 1.5s
-    //setInterval(placeCoin, 5500); // Coin will spawn every 5.5s
+    setInterval(placeCoin, 5500); // Coin will spawn every 5.5s
 
     player = new Player(Mario.x, Mario.y);
-    gameloop = setInterval(step, 250);
     keyListeners();
 }
 
@@ -94,7 +93,8 @@ function update(){
     }
 
     // Draw Mario character
-    player.draw();
+    step();
+    spawnFireball();
 
     // Draw Score Board
     context.fillStyle = "black";
@@ -131,11 +131,10 @@ function update(){
             collected = true;
         }
         else{
-            collected = true; // else statement not working
+            collected = false; // else statement not working
         }
     }
     
-
     while((coinArray.length > 0 && coinArray[0].maxY > 500)){
         if(collected == true){
             scoreBoard ++;
@@ -147,10 +146,11 @@ function update(){
         }
     }
 
-    // for(let i = 0; i < fireballArray.length; i++){
-    //     let Fireball = fireballArray[i];
-    //     context.drawImage()
-    // }
+    for(let i = 0; i < fireballArray.length; i++){
+        let Fireball = fireballArray[i];
+        Fireball.x += 2;
+        context.drawImage(fireballIMG, this.x + 50, this.y, 64, 64);
+    }
 }
 
 function placeBarrel(){
@@ -182,11 +182,21 @@ function placeCoin(){
 	coinArray.push(coinOb)
 }
 
+function spawnFireball(){
+    let fireballOb = {
+        img: fireballIMG,
+        x: player.x + 50,
+        y: player.y,
+        width: 64,
+        height: 64
+    }
+    fireballArray.push(fireballOb)
+}
 
 function step(){
     player.move();
     player.draw();
-    // player.shoot();
+    player.shoot();
 }
 
 // Mario character
@@ -232,11 +242,14 @@ class Player{
         context.fillRect(this.x,  this.y, this.width, this.height);
         context.drawImage(marioIMG, this.x,  this.y, this.width, this.height);
     }
-
-    // shoot(){
-    //     context.drawImage(fireball.img, fireball.x, fireball.y, fireball.width, fireball.height);
-        
-    // }
+    
+    shoot(){
+        // context.drawImage(fireball.img, fireball.x, fireball.y, fireball.width, fireball.height);
+        if(shoots == true){
+            // context.drawImage(fireballIMG, this.x + 50, this.y, 64, 64);
+            
+        }
+    }
 }
 
 function keyListeners(){
@@ -247,7 +260,7 @@ function keyListeners(){
         else if(e.key === "d"){
             rightKey = true;
         }
-        else if(e.key === "space"){
+        else if(e.key === "s"){
             shoots = true;
         }
     })
@@ -259,7 +272,7 @@ function keyListeners(){
         else if(e.key === "d"){
             rightKey = false;
         }
-        else if(e.key === "space"){
+        else if(e.key === "s"){
             shoots = false;
         }
     })
@@ -271,11 +284,3 @@ function collision(a,b){
 	       a.y < b.y + b.height &&
 	       a.y + a.height > b.y
 } // Code from ...
-
-let fireball = {
-    img: fireballIMG,
-    x: player.x + 50,
-    y: player.y,
-    width: 64,
-    height: 64
-}
