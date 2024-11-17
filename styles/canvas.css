@@ -1,14 +1,19 @@
+h1{
+    margin: 0 auto;
+    text-align: center;
+}
+
 .game-container{
-    width: 1000px;
-    height: 700px;
+    width: 500px;
+    height: 500px;
     border: 5px rgb(255, 0, 0) solid;
     margin: 0 auto;
 }
 
-.board{
+#canvas{
     background-image: url("../images/pixel-art-bg.avif");
     background-size: cover;
-    width: 1000px;
-    height: 700px;
+    width: 500px;
+    height: 500px;
     margin: 0 auto;
 }
