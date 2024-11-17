@@ -41,6 +41,8 @@ var rightKey;
 let gameOver = false;
 var gameloop;
 var player;
+let scoreBoard = 0;
+let collected = false
 
 // Create the canvaso on load
 window.onload = function(){
@@ -87,6 +89,11 @@ function update(){
     // Draw Mario character
     player.draw();
 
+    // Draw Score Board
+    context.fillStyle = "black";
+    context.font = "45px sans-serif";
+    context.fillText(scoreBoard, 10,50);
+
     for(let i = 0; i < barrelArray.length; i++){
         let Barrel = barrelArray[i];
         Barrel.x += velocityX; // Get the current image in the array and shift the position X of the barrel before drawing
@@ -106,10 +113,21 @@ function update(){
         Coin.y += velocityY;
         Coin.maxY = Coin.y;
         context.drawImage(Coin.img, Coin.x, Coin.y, Coin.width, Coin.height);
-    }
 
-    while(coinArray.length > 0 && coinArray[0].maxY > 500){
-        coinArray.shift(); // remove coin when it touches the ground
+        if(collision(player, Coin)){
+            collected = true;
+        }
+    }
+    
+
+    while((coinArray.length > 0 && coinArray[0].maxY > 500)){
+        if(collected == true){
+            scoreBoard += 1;
+            coinArray.shift();
+        }
+        else{
+            coinArray.shift(); // remove coin when it touches the ground
+        }
     }
 }
 
@@ -138,7 +156,6 @@ function placeCoin(){
         maxY: 490,
 		width: coinW,
 		height: coinH,
-		collected: false
 	}
 	coinArray.push(coinOb)
 }
@@ -222,6 +239,6 @@ function collision(a,b){
 	       a.x + a.width > b.x &&
 	       a.y < b.y + b.height &&
 	       a.y + a.height > b.y
-}
+} // Code from ...
 
 
