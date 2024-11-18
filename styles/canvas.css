@@ -10,7 +10,7 @@ h1{
     margin: 0 auto;
 }
 
-#canvas{
+.board{
     background-image: url("../images/pixel-art-bg.avif");
     background-size: cover;
     width: 500px;

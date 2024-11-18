@@ -4,7 +4,7 @@ let boardWidth = 1000; // board width
 let boardHeight = 700; // board height
 
 // Mario stats
-let marioWidth = 50;
+let marioWidth = 60;
 let marioHeight = 50;
 let marioX = boardWidth/2; // center mario
 let marioY = 490; // mario above the dirt of the background
@@ -29,7 +29,12 @@ const coinY = 0;
 const coinW = 40;
 const coinH = 40;
 
-let fireballArray = []
+let fireballX = 0;
+let fireballY = 0;
+let fireballSpeed = 5;
+const fireballW = 60;
+const fireballH = 60;
+const fireballMaxSpeed = 10;
 
 // Game physcis
 let velocityX = -2; // Obstacles moving speed
@@ -40,6 +45,7 @@ let speed;
 var leftKey;
 var rightKey;
 var shoots;
+var shooting;
 
 let gameOver = false;
 var gameloop;
@@ -68,10 +74,12 @@ window.onload = function(){
     // Fireball 
     fireballIMG = new Image();
     fireballIMG.src = "../images/fireball.gif";
+    fireballIMG.width = fireballW;
+    fireballIMG.height = fireballH;
     
     requestAnimationFrame(update);
     //setInterval(placeBarrel, 3000); // Barrel will be placed every 1.5s
-    setInterval(placeCoin, 5500); // Coin will spawn every 5.5s
+    // setInterval(placeCoin, 5500); // Coin will spawn every 5.5s
 
     player = new Player(Mario.x, Mario.y);
     keyListeners();
@@ -91,10 +99,9 @@ function update(){
         context.fillText("Game Over", 400,350);
         return;
     }
-
+    context.drawImage(fireballIMG, fireballX, fireballY, fireballW, fireballH);
     // Draw Mario character
     step();
-    spawnFireball();
 
     // Draw Score Board
     context.fillStyle = "black";
@@ -146,11 +153,6 @@ function update(){
         }
     }
 
-    for(let i = 0; i < fireballArray.length; i++){
-        let Fireball = fireballArray[i];
-        Fireball.x += 2;
-        context.drawImage(fireballIMG, this.x + 50, this.y, 64, 64);
-    }
 }
 
 function placeBarrel(){
@@ -182,17 +184,6 @@ function placeCoin(){
 	coinArray.push(coinOb)
 }
 
-function spawnFireball(){
-    let fireballOb = {
-        img: fireballIMG,
-        x: player.x + 50,
-        y: player.y,
-        width: 64,
-        height: 64
-    }
-    fireballArray.push(fireballOb)
-}
-
 function step(){
     player.move();
     player.draw();
@@ -204,8 +195,8 @@ class Player{
     constructor(x,y) {
         this.x = marioX;
         this.y = marioY;
-        this.width = marioWidth; // Delete after testing collision
-        this.height = marioHeight; // Delete after testing collision
+        this.width = marioWidth;
+        this.height = marioHeight; 
         this.friction = 0.6 // to slow down the character
         this.speed = 0;
         this.maxSpeed = 15;
@@ -244,11 +235,16 @@ class Player{
     }
     
     shoot(){
-        // context.drawImage(fireball.img, fireball.x, fireball.y, fireball.width, fireball.height);
-        if(shoots == true){
-            // context.drawImage(fireballIMG, this.x + 50, this.y, 64, 64);
-            
+        if(shoots){
+            console.log("shoot");
+            fireballX = this.x + 50;
+            fireballY = this.y;
+            fireballSpeed += 2;
+            if(fireballSpeed >= fireballMaxSpeed){
+                fireballSpeed = fireballMaxSpeed;
+            }
         }
+        fireballX += fireballSpeed;
     }
 }
 
