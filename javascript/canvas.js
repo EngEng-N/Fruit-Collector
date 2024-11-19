@@ -116,7 +116,7 @@ function update(){
         context.fillText("Game Over", 400,350);
         return;
     }
-    context.drawImage(fireballIMG, fireballX, fireballY, fireballW, fireballH);
+
     // Draw Mario character
     step();
 
@@ -287,19 +287,6 @@ class Player{
     
     shoot(){
 
-        // function fire(){
-        //     for(let i = 0; i < 1; i++){
-        //         var Fireball = fireballArray[i];
-        //         fireballSpeed += 2;
-        //         Fireball.x += fireballSpeed;
-        //         context.drawImage(Fireball.img, Fireball.x, Fireball.y, Fireball.width, Fireball.height);
-        //         if(Fireball.x >= board.width){
-        //             fireballArray.shift();
-        //         }
-        //     }
-        // }
-        // fireball();
-
         // Go through all the fireballs and move them
         fireballArray.forEach((fireball) => {
             fireball.x += fireball.speed;
@@ -313,14 +300,6 @@ class Player{
         
 
         if(shoots){
-            // console.log("shoot");
-            // fireballX = this.x + 50;
-            // fireballY = this.y;
-            // fireballSpeed += 2;
-            // if(fireballSpeed >= fireballMaxSpeed){
-            //     fireballSpeed = fireballMaxSpeed;
-            // }
-            //fire();
 
             console.log("shoot");
             if (fireballArray.length < 5) {
@@ -333,10 +312,6 @@ class Player{
             }
             shoots = false; // Reset shoots to prevent continuous firing
         }
-        // fireballX += fireballSpeed;
-        // if(fireballX >= board.width){
-        //     fireballX = 50;
-        // }
     }
 }
 
@@ -374,19 +349,6 @@ function collision(a,b){
 	       a.y < b.y + b.height &&
 	       a.y + a.height > b.y
 } // Code from ...
-
-// function fireball(){
-//     let fireballOb = {
-//         img: fireballIMG,
-//         x: player.x,
-//         y: player.y,
-//         width: 60,
-//         height: 60,
-//         speed: 5,
-//         max: board.width
-//     }
-//     fireballArray.push(fireballOb);
-// }
 
 class Fireball {
     constructor(){
