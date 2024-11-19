@@ -236,7 +236,7 @@ function step(){
     player.move();
     player.draw();
     player.shoot();
-    //fireball();
+    fireball();
 }
 
 // Mario character
@@ -287,29 +287,18 @@ class Player{
     
     shoot(){
 
-        // function fire(){
-        //     for(let i = 0; i < 1; i++){
-        //         var Fireball = fireballArray[i];
-        //         fireballSpeed += 2;
-        //         Fireball.x += fireballSpeed;
-        //         context.drawImage(Fireball.img, Fireball.x, Fireball.y, Fireball.width, Fireball.height);
-        //         if(Fireball.x >= board.width){
-        //             fireballArray.shift();
-        //         }
-        //     }
-        // }
-        // fireball();
-
-        // Go through all the fireballs and move them
-        fireballArray.forEach((fireball) => {
-            fireball.x += fireball.speed;
-            context.drawImage(fireball.img, fireball.x, fireball.y, fireball.width, fireball.height);
-
-            // Remove fireball if it goes off the screen
-            if (fireball.x >= board.width) {
-                fireballArray.splice(0, 1);
+        function fire(){
+            for(let i = 0; i < 1; i++){
+                var Fireball = fireballArray[i];
+                fireballSpeed += 2;
+                Fireball.x += fireballSpeed;
+                context.drawImage(Fireball.img, Fireball.x, Fireball.y, Fireball.width, Fireball.height);
+                if(Fireball.x >= board.width){
+                    fireballArray.shift();
+                }
             }
-        });
+        }
+        // fireball();
         
 
         if(shoots){
@@ -320,18 +309,7 @@ class Player{
             // if(fireballSpeed >= fireballMaxSpeed){
             //     fireballSpeed = fireballMaxSpeed;
             // }
-            //fire();
-
-            console.log("shoot");
-            if (fireballArray.length < 5) {
-                const newFireBall = new Fireball();
-                  // x: this.x + 50,
-                    // y: this.y,
-                    // speed: this.fireballSpeed,
-                    // img: new Image() // Add your fireball image source here
-                fireballArray.push(newFireBall);
-            }
-            shoots = false; // Reset shoots to prevent continuous firing
+            fire();
         }
         // fireballX += fireballSpeed;
         // if(fireballX >= board.width){
@@ -375,29 +353,17 @@ function collision(a,b){
 	       a.y + a.height > b.y
 } // Code from ...
 
-// function fireball(){
-//     let fireballOb = {
-//         img: fireballIMG,
-//         x: player.x,
-//         y: player.y,
-//         width: 60,
-//         height: 60,
-//         speed: 5,
-//         max: board.width
-//     }
-//     fireballArray.push(fireballOb);
-// }
-
-class Fireball {
-    constructor(){
-        this.img = fireballIMG;
-        this.x = player.x;
-        this.y = player.y;
-        this.width = 60;
-        this.height = 60;
-        this.speed = 2;
-        //this.max = board.width
+function fireball(){
+    let fireballOb = {
+        img: fireballIMG,
+        x: player.x,
+        y: player.y,
+        width: 60,
+        height: 60,
+        speed: 5,
+        maxX: board.width
     }
+    fireballArray.push(fireballOb);
 }
 
 function number(){
