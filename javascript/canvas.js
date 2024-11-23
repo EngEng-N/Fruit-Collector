@@ -1,3 +1,8 @@
+// Game Container
+const button = document.getElementById("play-again");
+const gameContainer = document.querySelector(".gameplay");
+const gameEndContainer = document.querySelector(".play-again-container");
+
 // Game board
 let board = document.querySelector(".board");
 let boardWidth = 1000; // board width
@@ -20,7 +25,7 @@ let Mario = {
 let barrelArray = [];
 let barrelWidth = 60;
 let barrelHeight = 41;
-let barrelX = boardWidth; // draw the barrel at the right side of the screen
+let barrelX = boardWidth + 20; // draw the barrel at the right side of the screen
 let barrelY = 490; // draw the barrel at the same Y level as Mario
 
 let bombArray = [];
@@ -34,8 +39,8 @@ let bombXX = 0;
 let coinArray = [];
 let coinX = 300;
 const coinY = 0;
-const coinW = 40;
-const coinH = 40;
+const coinW = 60;
+const coinH = 60;
 
 let fireballX = 0;
 let fireballY = 0;
@@ -61,7 +66,8 @@ let gameOver = false;
 var gameloop;
 var player;
 let scoreBoard = 0;
-let collected = false
+var collected;
+let destroyed = false;
 
 // Create the canvaso on load
 window.onload = function(){
@@ -93,12 +99,13 @@ window.onload = function(){
     fireballIMG.height = fireballH;
     
     requestAnimationFrame(update);
-    //setInterval(placeBarrel, 3000); // Barrel will spawn every 3s
-    // setInterval(placeBomb, 5000); // Bomg will spawn every 5s
-    // setInterval(placeCoin, 5500); // Coin will spawn every 5.5s
+    // setInterval(placeBarrel, 3000); // Barrel will spawn every 3s
+    setInterval(placeBomb, 5000); // Bomg will spawn every 5s
+    setInterval(placeCoin, 5500); // Coin will spawn every 5.5s
     setInterval(number, 4000); // Update Bomb location
 
     player = new Player(Mario.x, Mario.y);
+    fb = new Fireball();
     keyListeners();
 }
 
@@ -111,11 +118,11 @@ function update(){
     context.clearRect(0,0, board.width, board.height); 
 
     if(gameOver){
-        context.fillStyle = "black";
-        context.font = "45px sans-serif";
-        context.fillText("Game Over", 400,350);
+        gameEndContainer.style.display = "block";
+        gameContainer.style.display = "none";
         return;
     }
+
 
     // Draw Mario character
     step();
@@ -140,6 +147,10 @@ function update(){
         if(collision(player, Barrel)){
             gameOver = true;
         }
+        
+        if(collision(Fireball, Barrel)){
+            barrelArray.shift();
+        }
     }
 
     while(barrelArray.length > 0 && barrelArray[0].x < -barrelWidth){
@@ -152,20 +163,22 @@ function update(){
         context.drawImage(Coin.img, Coin.x, Coin.y, Coin.width, Coin.height);
         if(collision(player, Coin)){
             collected = true;
+            coinArray.shift();
         }
         else{
-            collected = false; // else statement not working
+            collected = false;
+        }
+        
+        if(collected){
+            scoreBoard ++;
         }
     }
     
     while((coinArray.length > 0 && coinArray[0].y > 500)){
-        if(collected == true){
-            scoreBoard ++;
-            coinArray.shift();
-        }
-        else{
-            player.lives --;
-            coinArray.shift(); // remove coin when it touches the ground
+        player.lives --;
+        coinArray.shift(); // remove coin when it touches the ground
+        if(player.lives <= 0){
+            gameOver = true;
         }
     }
 
@@ -176,6 +189,9 @@ function update(){
         if(collision(player, Bomb)){
             player.lives --;
             bombArray.shift();
+        }
+        if(player.lives <= 0){
+            gameOver = true;
         }
     }
 
@@ -204,8 +220,7 @@ function placeBarrel(){
         x : barrelX,
         y : barrelY,
         width : barrelWidth,
-        height : barrelHeight,
-        destroyed : false
+        height : barrelHeight
     }
     barrelArray.push(barrelOb);
 }
@@ -236,7 +251,6 @@ function step(){
     player.move();
     player.draw();
     player.shoot();
-    //fireball();
 }
 
 // Mario character
@@ -304,10 +318,6 @@ class Player{
             console.log("shoot");
             if (fireballArray.length < 5) {
                 const newFireBall = new Fireball();
-                  // x: this.x + 50,
-                    // y: this.y,
-                    // speed: this.fireballSpeed,
-                    // img: new Image() // Add your fireball image source here
                 fireballArray.push(newFireBall);
             }
             shoots = false; // Reset shoots to prevent continuous firing
@@ -357,15 +367,31 @@ class Fireball {
         this.y = player.y;
         this.width = 60;
         this.height = 60;
-        this.speed = 2;
-        //this.max = board.width
+        this.speed = 5;
     }
 }
 
 function number(){
     bombX += Math.random()*1000;
-    console.log("hello")
     if(bombX >= 1000){
         bombX = Math.random()*1000;
     }
 }
+
+function restartGame(){
+    gameOver = false;
+    scoreBoard = 0;
+    lives = 5;
+    barrelArray = [];
+    coinArray = [];
+    bombArray = [];
+    fireballArray = [];
+    player = new Player(Mario.x, Mario.y);
+    fb = new Fireball();
+}
+
+button.addEventListener("click", function(){
+    gameContainer.style.display = "block";
+    gameEndContainer.style.display = "none";
+    restartGame();
+})

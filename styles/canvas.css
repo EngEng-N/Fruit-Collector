@@ -1,6 +1,10 @@
 h1{
     margin: 0 auto;
     text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
 }
 
 .game-container{
@@ -8,6 +12,7 @@ h1{
     height: 500px;
     border: 5px rgb(255, 0, 0) solid;
     margin: 0 auto;
+    display: block;
 }
 
 .board{
@@ -16,4 +21,23 @@ h1{
     width: 500px;
     height: 500px;
     margin: 0 auto;
+}
+
+.play-again-container{
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border: 5px rgb(255, 0, 0) solid;
+    margin: 0 auto;
+    display: none;
+}
+
+.play-again-container #play-again{
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 1rem;
 }

@@ -113,6 +113,49 @@ button{
 }
 
 /* Gameplay container */
-.gameplay{
+.gameplay-container{
     display: none;
+}
+
+
+#gameover-h1{
+    margin: 0 auto;
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+}
+
+.gameplay{
+    width: 1000px;
+    height: 700px;
+    margin: 0 auto;
+    display: none;
+}
+
+.board{
+    background-image: url("../images/pixel-art-bg.avif");
+    background-size: cover;
+    width: 1000px;
+    height: 700px;
+    margin: 0 auto;
+}
+
+.play-again-container{
+    position: relative;
+    width: 1000px;
+    height: 700px;
+    margin: 0 auto;
+    display: none;
+}
+
+.play-again-container #play-again{
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 1rem;
 }

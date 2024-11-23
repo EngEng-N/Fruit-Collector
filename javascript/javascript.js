@@ -10,6 +10,9 @@ const HTPdisplay = document.querySelector(".htp-display");
 // Credits container
 const creditsPlay = document.querySelector(".credits-container");
 
+// Play container
+const gamePlayContainer = document.querySelector(".gameplay-container");
+const gamePlay = document.querySelector(".gameplay");
 
 // Navigation buttons
 const HTPbutton = document.getElementById("btn-htp");
@@ -96,4 +99,7 @@ difficultyBtns.addEventListener('click', function(e){
 // Play button
 Playbutton.addEventListener("click", function(){
     startContainer.style.display = "none";
+    gamePlayContainer.style.display = "block";
+    gamePlay.style.display = "block";
 })
+

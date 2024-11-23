@@ -32,8 +32,9 @@
                     <p>A = left, D = right, Space = kick</p>
                     <h3>Rules</h3>
                     <ol>
-                        <li>Collect the coins to win.</li>
+                        <li>Collect 30 coins to win.</li>
                         <li>Avoid touching the bombs and obstacles.</li>
+                        <li>If lives = 0, game is over.</li>
                         <li>The speed of the coins, bombs and obstacles will change depend on the difficulty.</li>
                     </ol>
                 </article>
@@ -52,20 +53,43 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Java</td>
+                                <td>Cam Joyce</td>
+                                <td>Mario Images</td>
+                            </tr>
+                            <tr>
+                                <td>PNGWing</td>
                                 <td>Mario background</td>
+                            </tr>
+                            <tr>
+                                <td>PNGWing</td>
+                                <td>Coin Image</td>
+                            </tr>
+                            <tr>
+                                <td>Super Mario Wiki</td>
+                                <td>Bomb Image</td>
+                            </tr>
+                            <tr>
+                                <td>Cam Joyce</td>
+                                <td>Barrel Image</td>
                             </tr>
                         </tbody>
                     </table>
                 </article>
             </div>
         </section>
-        <section class="gameplay">
-            <canvas class="play-container">
-
-            </canvas>
+        <section class="gameplay-container">
+            <div class="play-again-container">
+                <h1 id="gameover-h1">Game Over!</h1>
+                <button id="play-again">Play Again</button>
+            </div>
+            <div class="gameplay">
+                <canvas class="board">
+                    
+                </canvas>
+            </div>
         </section>
     </div>
     <script src="javascript/javascript.js"></script>
+    <script src="javascript/canvas.js"></script>
 </body>
 </html>
