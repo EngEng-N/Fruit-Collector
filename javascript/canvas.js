@@ -290,6 +290,14 @@ class Player{
             this.speed = -this.maxSpeed;
         }
 
+        // Check Mario x position not going off screen
+        if(this.x >= board.width - this.width){
+            this.x = board.width - this.width;
+        }
+        else if(this.x <= 0){
+            this.x = 0;
+        }
+
         this.x += this.speed; // add the speed to X position of the character
     }
 
