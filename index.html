@@ -11,10 +11,9 @@
     <div class="game-container">
         <section class="game-starter">
             <div class="nav-container">
-                <button>logo</button>
                 <button id="btn-htp">How to play</button>
                 <button id="btn-play">Play</button>
-                <div id="difficulty-btns">
+                <div id="difficulty">
                     <button id="btn-easy" data-difficulty="easy">Easy</button>
                     <button id="btn-medium" data-difficulty="medium">Medium</button>
                     <button id="btn-hard" data-difficulty="hard">Hard</button>
@@ -32,10 +31,11 @@
                     <p>A = left, D = right, Space = kick</p>
                     <h3>Rules</h3>
                     <ol>
-                        <li>Collect 30 coins to win.</li>
+                        <li>Collect 20 coins to win.</li>
                         <li>Avoid touching the bombs and obstacles.</li>
                         <li>If lives = 0, game is over.</li>
-                        <li>The speed of the coins, bombs and obstacles will change depend on the difficulty.</li>
+                        <li>Random difficulty will get assigned each game.</li>
+                        <li>There will be different obstacles on different difficulty.</li>
                     </ol>
                 </article>
             </div>
@@ -82,6 +82,10 @@
                 <h1 id="gameover-h1">Game Over!</h1>
                 <button id="play-again">Play Again</button>
             </div>
+            <div class="play-again-win">
+                <h1 id="gamewin-h1">You Won! Too easy? Change the difficulty.</h1>
+                <button id="play-again-win">Play Again</button>
+            </div>
             <div class="gameplay">
                 <canvas class="board">
                     
@@ -90,6 +94,5 @@
         </section>
     </div>
     <script src="javascript/javascript.js"></script>
-    <script src="javascript/canvas.js"></script>
 </body>
 </html>
